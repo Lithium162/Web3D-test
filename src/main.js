@@ -44,7 +44,7 @@ earthOrbit.add(earth);
 const geometryMoon = new THREE.SphereGeometry(radius,widthSegments,heightSegments);
 
 const moon = new THREE.Mesh(geometryEarth,material2)
-moon.position.x = 1;
+moon.position.x = 0.8;
 moon.scale.set(0.5,0.5,0.5);
 earthOrbit.add(moon);
 
