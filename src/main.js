@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+import * as THREE from '../node_modules/three/build/three.module.js';
 import { ThreeMFLoader } from 'three/examples/jsm/Addons.js';
 //创建场景
 const scene =  new THREE.Scene();
