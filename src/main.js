@@ -1,4 +1,4 @@
-import * as THREE from 'https://unpkg.com/three@0.155.0/build/three.module.js';
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js';
 //创建场景
 const scene =  new THREE.Scene();
 //创建相机视角
