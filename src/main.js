@@ -1,5 +1,4 @@
-import * as THREE from 'node_modules/three/build/three.module.js';
-import { ThreeMFLoader } from 'node_modules/three/examples/jsm/Addons.js';
+import * as THREE from 'https://unpkg.com/three@0.155.0/build/three.module.js';
 //创建场景
 const scene =  new THREE.Scene();
 //创建相机视角
