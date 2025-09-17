@@ -46,7 +46,7 @@ const gplanet = new THREE.SphereGeometry(data.radius, data.widthSegments, data.h
 
 //创建物体
 const solarSystem = new THREE.Object3D;
-const unit = 1;
+const unit = 8;
 scene.add(solarSystem);
     const Sun = new THREE.Mesh(gplanet,material1);
     Sun.scale.set(20, 20, 20);
@@ -122,17 +122,28 @@ solarSystem.add(NeptuneOrbit);
 
 renderer.render(scene, camera);
 
-const speed =  1;
+const speed = 1;
 function planetRevolution(){
-    solarSystem.rotation.y +=0.01*speed;
-    MercuryOrbit.rotation.y +=0.01*speed;
-    VenusOrbit.rotation.y +=0.01*speed;
-    earthOrbit.rotation.y +=0.005*speed;
-    MarsOrbit.rotation.y +=0.01*speed;
-    JupiterOrbit.rotation.y +=0.01*speed;
-    SaturnOrbit.rotation.y +=0.01*speed;
-    UranusOrbit.rotation.y +=0.01*speed;
-    NeptuneOrbit.rotation.y +=0.01*speed;
+
+    // T1.sun = 30
+    // T2 = 88
+    // T3 = 224
+    // t4 = 365
+    // t5 = 686
+    // t6 = 11 
+    // t7 = 30
+    // t8 = 84
+    // t9 = 164
+    // 3/T = v
+    Sun.rotation.y +=0.20944*speed;
+    MercuryOrbit.rotation.y +=0.0714*speed;
+    VenusOrbit.rotation.y +=0.02805*speed;
+    earthOrbit.rotation.y +=0.0172142466*speed;
+    MarsOrbit.rotation.y +=0.00916*speed;
+    JupiterOrbit.rotation.y +=0.0014510393*speed;
+    SaturnOrbit.rotation.y +=0.0005839219*speed;
+    UranusOrbit.rotation.y +=0.0002049250*speed;
+    NeptuneOrbit.rotation.y +=0.0001044520*speed;
 }
 
 //动画函数
