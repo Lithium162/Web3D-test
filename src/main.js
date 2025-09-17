@@ -1,24 +1,43 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GUI } from "three/examples/jsm/libs/lil-gui.module.min.js";
+
 //创建场景
 const scene =  new THREE.Scene();
-//创建相机视角
-const camera = new THREE .PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
-camera.position.set(0, 8, 0);
-camera.up.set(0, 0, 1);
-camera.lookAt(0, 0, 0);
-//
-
 
 //创建渲染器
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth,window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
+//轨道控制和相机
+const camera = new THREE .PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,1000);
+camera.position.set(0, 8, 0);
+
 const controls = new OrbitControls( camera, renderer.domElement );
+controls.target.set(0, 0, 0);
+
+//加入天空盒
+const loader = new THREE.TextureLoader();
+const texture = loader.load(
+  'resources/images/space.jpg',
+  () => {
+    texture.mapping = THREE.EquirectangularReflectionMapping;
+    texture.colorSpace = THREE.SRGBColorSpace;
+    scene.background = texture;
+  });
+
+//创建光源
+const color = 0xFFFFFF;
+const intensity = 1;
+const light = new THREE.AmbientLight(color);
+scene.add(light);
+
+const gui = new GUI();
+gui.add(light,'intensity',0,5,0.01);
 
 
-//创建纹理
+//创建星体纹理(临时用)
 const loader1 = new THREE.TextureLoader();
 const texture1 = loader1.load('resources/images/test.png');
 const texture2 = loader1.load('resources/images/test.png');
@@ -30,21 +49,21 @@ const texture7 = loader1.load('resources/images/test.png');
 const texture8 = loader1.load('resources/images/test.png');
 const texture9 = loader1.load('resources/images/test.png');
 //创建材质
-const material1 = new THREE.MeshBasicMaterial({map:texture1});
-const material2 = new THREE.MeshBasicMaterial({map:texture2});
-const material3 = new THREE.MeshBasicMaterial({map:texture3});
-const material4 = new THREE.MeshBasicMaterial({map:texture4});
-const material5 = new THREE.MeshBasicMaterial({map:texture5});
-const material6 = new THREE.MeshBasicMaterial({map:texture6});
-const material7 = new THREE.MeshBasicMaterial({map:texture7});
-const material8 = new THREE.MeshBasicMaterial({map:texture8});
-const material9 = new THREE.MeshBasicMaterial({map:texture9});
+const material1 = new THREE.MeshPhongMaterial({map:texture1});
+const material2 = new THREE.MeshPhongMaterial({map:texture2});
+const material3 = new THREE.MeshPhongMaterial({map:texture3});
+const material4 = new THREE.MeshPhongMaterial({map:texture4});
+const material5 = new THREE.MeshPhongMaterial({map:texture5});
+const material6 = new THREE.MeshPhongMaterial({map:texture6});
+const material7 = new THREE.MeshPhongMaterial({map:texture7});
+const material8 = new THREE.MeshPhongMaterial({map:texture8});
+const material9 = new THREE.MeshPhongMaterial({map:texture9});
 
 //创建物理信息
 const data = {radius : 0.2,widthSegments : 30,heightSegments : 30 };
 const gplanet = new THREE.SphereGeometry(data.radius, data.widthSegments, data.heightSegments);
 
-//创建物体
+//创建星体
 const solarSystem = new THREE.Object3D;
 const unit = 8;
 scene.add(solarSystem);
@@ -125,16 +144,6 @@ renderer.render(scene, camera);
 const speed = 1;
 function planetRevolution(){
 
-    // T1.sun = 30
-    // T2 = 88
-    // T3 = 224
-    // t4 = 365
-    // t5 = 686
-    // t6 = 11 
-    // t7 = 30
-    // t8 = 84
-    // t9 = 164
-    // 3/T = v
     Sun.rotation.y +=0.20944*speed;
     MercuryOrbit.rotation.y +=0.0714*speed;
     VenusOrbit.rotation.y +=0.02805*speed;
