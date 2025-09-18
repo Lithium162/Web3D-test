@@ -263,17 +263,17 @@ const neptuneTexture = loader1.load('neptune.jpg');
 const moonTexture = loader1.load('moon.jpg');
 const fireTexture = loader.load
 
-// 创建材质
-const sunMaterial = new THREE.MeshStandardMaterial({ map: sunTexture });
-const mercuryMaterial = new THREE.MeshStandardMaterial({ map: mercuryTexture });
-const venusMaterial = new THREE.MeshStandardMaterial({ map: venusTexture });
-const earthMaterial = new THREE.MeshStandardMaterial({ map: earthTexture });
-const marsMaterial = new THREE.MeshStandardMaterial({ map: marsTexture });
-const jupiterMaterial = new THREE.MeshStandardMaterial({ map: jupiterTexture });
-const saturnMaterial = new THREE.MeshStandardMaterial({ map: saturnTexture });
-const uranusMaterial = new THREE.MeshStandardMaterial({ map: uranusTexture });
-const neptuneMaterial = new THREE.MeshStandardMaterial({ map: neptuneTexture });
-const moonMaterial = new THREE.MeshStandardMaterial({ map: moonTexture });
+//创建材质
+const sunMaterial = new THREE.MeshBasicMaterial({ map: sunTexture });
+const mercuryMaterial = new THREE.MeshBasicMaterial({ map: mercuryTexture });
+const venusMaterial = new THREE.MeshBasicMaterial({ map: venusTexture });
+const earthMaterial = new THREE.MeshBasicMaterial({ map: earthTexture });
+const marsMaterial = new THREE.MeshBasicMaterial({ map: marsTexture });
+const jupiterMaterial = new THREE.MeshBasicMaterial({ map: jupiterTexture });
+const saturnMaterial = new THREE.MeshBasicMaterial({ map: saturnTexture });
+const uranusMaterial = new THREE.MeshBasicMaterial({ map: uranusTexture });
+const neptuneMaterial = new THREE.MeshBasicMaterial({ map: neptuneTexture });
+const moonMaterial = new THREE.MeshBasicMaterial({ map: moonTexture });
 
 
 //创建物理信息
@@ -335,9 +335,6 @@ scene.add(solarSystem);
     const Sun = new THREE.Mesh(gplanet,sunMaterial);
     Sun.scale.set(20, 20, 20);
     solarSystem.add(Sun);
-
-    const Asteroidbelt = createPlanetRings(1.1, 1.4, 3000, 0xd8ca9d);
-    Sun.add(Asteroidbelt);
 //水
     const MercuryOrbit = new THREE.Object3D();
     const Mercury = new THREE.Mesh(gplanet,mercuryMaterial)
