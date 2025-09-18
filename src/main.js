@@ -1,8 +1,6 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GUI } from 'https://cdn.jsdelivr.net/npm/lil-gui@version/+esm';
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/loaders/GLTFLoader.js';
-import { AdditiveBlending } from 'three';
 
 //创建场景
 const scene =  new THREE.Scene();
@@ -18,7 +16,6 @@ camera.position.set(0, 5, -10);
 
 // const controls = new OrbitControls( camera, renderer.domElement );
 // controls.target.set(0, 0, 0);
-
 
 //加入天空盒
 const loader = new THREE.TextureLoader();
