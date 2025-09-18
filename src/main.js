@@ -1,5 +1,5 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.min.js';
-import { GUI } from 'https://cdn.jsdelivr.net/npm/lil-gui@version/+esm';
+import { GUI } from 'https://cdn.jsdelivr.net/npm/lil-gui@0.18.0/+esm';
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/loaders/GLTFLoader.js';
 
 //创建场景
