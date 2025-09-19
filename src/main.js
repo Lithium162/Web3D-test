@@ -1,6 +1,8 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/+esm';
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/loaders/GLTFLoader.js/+esm'
 import { GUI } from 'https://cdn.jsdelivr.net/npm/lil-gui@0.18.0/+esm';
+import { ThreeMFLoader } from 'three/examples/jsm/Addons.js';
+import { directPointLight } from 'three/tsl';
 
 //创建场景
 const scene = new THREE.Scene();
@@ -30,12 +32,17 @@ const texture = loader.load(
 
 //创建光源
 const color = 0xFFFFFF;
-const intensity = 0.5;
-const light = new THREE.AmbientLight(color);
+const intensity1 = 1;
+const light = new THREE.AmbientLight(color,intensity1);
 scene.add(light);
 
+const intensity2 = 0.8;
+const SunpointLight = new THREE.PointLight(color,intensity2);
+scene.add(SunpointLight);
+
 const gui = new GUI();
-gui.add(light,'intensity',0,5,0.01);
+gui.add(light,'intensity',0,5,0.01).name('环境光');
+gui.add(SunpointLight,'intensity',0,5,0.01).name('太阳点光源');
 
 //飞船
 let spaceship;
@@ -47,7 +54,7 @@ const gltfLoader = new GLTFLoader();
 gltfLoader.load('resources/model/spaceship/scene.gltf', (gltf) => {
     console.log('OK')
     spaceship = gltf.scene;
-    spaceship.scale.set(0.1, 0.1, 0.1);
+    spaceship.scale.set(0.05, 0.05, 0.05);
     spaceship.rotation.y =  Math.PI;
     spaceship.position.set(0,0,-12);
     scene.add(spaceship);
@@ -61,7 +68,7 @@ gltfLoader.load('resources/model/spaceship/scene.gltf', (gltf) => {
 // 鼠标控制
 let mouseX = 0;
 let mouseY = 0;
-const rotationspeed = 0.002;
+const rotationspeed = 0.0015;
 
 document.addEventListener('mousemove', (event) => {
     mouseX = (event.clientX - window.innerWidth / 2) * rotationspeed;
@@ -87,7 +94,7 @@ document.addEventListener('keyup', (event) => {
 let particleSystem, particleGeo, particleMat;
 const maxParticles = 20000;      // 最大粒子数
 const emissionRate = 8;        // 持续按 W 时每帧发射的粒子数
-const particleLifetime = 0.05;   // 粒子寿命（秒）
+const particleLifetime = 0.5;   // 粒子寿命（秒）
 const particles = [];           // 粒子对象池
 
 function initParticles() {
