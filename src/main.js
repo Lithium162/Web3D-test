@@ -1,9 +1,6 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/+esm';
 import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/loaders/GLTFLoader.js/+esm'
 import { GUI } from 'https://cdn.jsdelivr.net/npm/lil-gui@0.18.0/+esm';
-import { ThreeMFLoader } from 'three/examples/jsm/Addons.js';
-import { directPointLight } from 'three/tsl';
-
 //创建场景
 const scene = new THREE.Scene();
 
