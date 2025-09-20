@@ -1,6 +1,8 @@
 import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.170.0/+esm';
-import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/loaders/GLTFLoader.js/+esm'
+import { GLTFLoader } from 'https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/loaders/GLTFLoader.js/+esm';
 import { GUI } from 'https://cdn.jsdelivr.net/npm/lil-gui@0.18.0/+esm';
+
+
 //创建场景
 const scene = new THREE.Scene();
 
@@ -29,17 +31,12 @@ const texture = loader.load(
 
 //创建光源
 const color = 0xFFFFFF;
-const intensity1 = 1;
-const light = new THREE.AmbientLight(color,intensity1);
+const intensity = 0.5;
+const light = new THREE.AmbientLight(color);
 scene.add(light);
 
-const intensity2 = 0.8;
-const SunpointLight = new THREE.PointLight(color,intensity2);
-scene.add(SunpointLight);
-
 const gui = new GUI();
-gui.add(light,'intensity',0,5,0.01).name('环境光');
-gui.add(SunpointLight,'intensity',0,5,0.01).name('太阳点光源');
+gui.add(light,'intensity',0,5,0.01);
 
 //飞船
 let spaceship;
@@ -51,7 +48,7 @@ const gltfLoader = new GLTFLoader();
 gltfLoader.load('resources/model/spaceship/scene.gltf', (gltf) => {
     console.log('OK')
     spaceship = gltf.scene;
-    spaceship.scale.set(0.05, 0.05, 0.05);
+    spaceship.scale.set(0.1, 0.1, 0.1);
     spaceship.rotation.y =  Math.PI;
     spaceship.position.set(0,0,-12);
     scene.add(spaceship);
@@ -65,7 +62,7 @@ gltfLoader.load('resources/model/spaceship/scene.gltf', (gltf) => {
 // 鼠标控制
 let mouseX = 0;
 let mouseY = 0;
-const rotationspeed = 0.0015;
+const rotationspeed = 0.002;
 
 document.addEventListener('mousemove', (event) => {
     mouseX = (event.clientX - window.innerWidth / 2) * rotationspeed;
@@ -91,7 +88,7 @@ document.addEventListener('keyup', (event) => {
 let particleSystem, particleGeo, particleMat;
 const maxParticles = 20000;      // 最大粒子数
 const emissionRate = 8;        // 持续按 W 时每帧发射的粒子数
-const particleLifetime = 0.5;   // 粒子寿命（秒）
+const particleLifetime = 0.05;   // 粒子寿命（秒）
 const particles = [];           // 粒子对象池
 
 function initParticles() {
@@ -200,7 +197,7 @@ const basespeed = 0.1;
 const boostspeed = 0.3;
 let currentspeed = 0;
 const deadzone = 0.3;
-//相机跟随
+//移动
 function move(){
     if (spaceship) {
         // targetRotationX += (mouseY - targetRotationX) * 0.1;
@@ -212,14 +209,11 @@ function move(){
             spaceship.rotation.x -= Math.sqrt(Math.abs(mouseY)-deadzone) * 0.01 * Math.sign(mouseY-deadzone);               
         }
         // spaceship.rotation.x = Math.max(-Math.PI/4, Math.min(Math.PI/2, spaceship.rotation.x));
-
-               
+     
         if (keys.w) {
             currentspeed = keys.shift ? boostspeed : basespeed;
-            
         } else {
-            currentspeed = 0;
-
+            currentspeed = 0
         }
         // 移动飞船
         const direction = new THREE.Vector3(0, 0, -1);
@@ -227,27 +221,21 @@ function move(){
         spaceship.position.add(direction.multiplyScalar(currentspeed));      
     }
 
-    
-
     //相机跟随
-
     const cameraOffset = new THREE.Vector3(0, 0.5, 1.2);
 
     // 根据飞船的旋转调整相机位置
     cameraOffset.applyQuaternion(spaceship.quaternion);
 
-    // 设置相机位置（飞船位置 + 偏移量）
+    //设置相机位置
     camera.position.copy(spaceship.position).add(cameraOffset);
 
-    // 让相机看向飞船前方稍远的位置，而不是直接看向飞船
+    //让相机看向飞船前方稍远的位置
     const lookAtPosition = new THREE.Vector3(0, 0, -4);
     lookAtPosition.applyQuaternion(spaceship.quaternion);
     lookAtPosition.add(spaceship.position);
-
     camera.lookAt(lookAtPosition);
 }
-
-
 
 // 创建材质的纹理 - 使用本地文件
 const loader1 = new THREE.TextureLoader();
@@ -278,7 +266,6 @@ const saturnMaterial = new THREE.MeshStandardMaterial({ map: saturnTexture });
 const uranusMaterial = new THREE.MeshStandardMaterial({ map: uranusTexture });
 const neptuneMaterial = new THREE.MeshStandardMaterial({ map: neptuneTexture });
 const moonMaterial = new THREE.MeshStandardMaterial({ map: moonTexture });
-
 
 //创建物理信息
 const data = {radius : 0.2,widthSegments : 30,heightSegments : 30 };
@@ -330,7 +317,6 @@ function createPlanetRings(innerRadius, outerRadius, particleCount, color, thick
 
     gui.add(planetData, 'speed', 0, 2, 0.01).name('公转速度');
     gui.add(planetData, 'unit', 4, 8, 0.5).name('距离比例');
-
 
 //创建星体
 const solarSystem = new THREE.Object3D;
